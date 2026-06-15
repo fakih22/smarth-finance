@@ -211,7 +211,7 @@ export default function ReportsPage() {
                       width={80}
                     />
                     <Tooltip 
-                      formatter={(value: number) => formatRupiah(value)}
+                      formatter={(value: any) => formatRupiah(Number(value))}
                       contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                     />
                     <Legend iconType="circle" />
@@ -251,7 +251,7 @@ export default function ReportsPage() {
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                       ))}
                     </Pie>
-                    <Tooltip formatter={(value: number) => formatRupiah(value)} />
+                    <Tooltip formatter={(value: any) => formatRupiah(Number(value))} />
                     <Legend layout="horizontal" verticalAlign="bottom" align="center" wrapperStyle={{ fontSize: '12px', paddingTop: '20px' }} />
                   </PieChart>
                 </ResponsiveContainer>

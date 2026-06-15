@@ -134,7 +134,7 @@ export default function DashboardPage() {
                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
                 <XAxis dataKey="name" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
                 <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `Rp${value / 1000}k`} />
-                <Tooltip cursor={{fill: 'transparent'}} formatter={(value: number) => formatRupiah(value)} />
+                <Tooltip cursor={{fill: 'transparent'}} formatter={(value: any) => formatRupiah(Number(value))} />
                 <Legend />
                 <Bar dataKey="pemasukan" name="Pemasukan" fill="#10b981" radius={[4, 4, 0, 0]} />
                 <Bar dataKey="pengeluaran" name="Pengeluaran" fill="#f43f5e" radius={[4, 4, 0, 0]} />
@@ -156,7 +156,7 @@ export default function DashboardPage() {
                   <Pie data={dataPie} cx="50%" cy="50%" innerRadius={60} outerRadius={100} paddingAngle={5} dataKey="value">
                     {dataPie.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)}
                   </Pie>
-                  <Tooltip formatter={(value: number) => formatRupiah(value)} />
+                  <Tooltip formatter={(value: any) => formatRupiah(Number(value))} />
                   <Legend />
                 </PieChart>
               </ResponsiveContainer>
