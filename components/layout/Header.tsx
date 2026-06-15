@@ -6,6 +6,8 @@ import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 export const Header = () => {
   const { user } = useAuth();
@@ -63,13 +65,34 @@ export const Header = () => {
           <p className="text-xs text-muted-foreground leading-none">{user?.email}</p>
         </div>
 
-        <button 
-          onClick={handleLogout}
-          className="text-muted-foreground hover:text-red-500 transition ml-2"
-          title="Keluar"
-        >
-          <LogOut className="h-5 w-5" />
-        </button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <button 
+              className="text-muted-foreground hover:text-red-500 transition ml-2"
+              title="Keluar"
+            >
+              <LogOut className="h-5 w-5" />
+            </button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px] w-[90vw] rounded-xl">
+            <DialogHeader>
+              <DialogTitle>Konfirmasi Keluar</DialogTitle>
+              <DialogDescription>
+                Apakah Anda yakin ingin keluar dari akun ini? Anda harus masuk kembali untuk mengakses data Anda.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter className="mt-4 gap-2 sm:gap-0">
+              <DialogClose asChild>
+                <Button variant="outline" className="w-full sm:w-auto mt-2 sm:mt-0 text-muted-foreground">
+                  Batal
+                </Button>
+              </DialogClose>
+              <Button variant="destructive" className="w-full sm:w-auto" onClick={handleLogout}>
+                Ya, Keluar
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
