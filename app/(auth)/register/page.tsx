@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile, signOut } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
@@ -42,7 +42,8 @@ export default function RegisterPage() {
         createdAt: new Date().toISOString()
       });
 
-      router.push("/dashboard");
+      await signOut(auth);
+      router.push("/login?registered=true");
     } catch (err: any) {
       setError(err.message || "Gagal membuat akun.");
     } finally {
@@ -104,14 +105,14 @@ export default function RegisterPage() {
                 required
               />
             </div>
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button type="submit" className="w-full bg-amber-500 hover:bg-amber-600 text-white" disabled={loading}>
               {loading ? "Mendaftar..." : "Daftar"}
             </Button>
           </form>
         </CardContent>
         <CardFooter className="justify-center">
           <p className="text-sm text-muted-foreground">
-            Sudah punya akun? <Link href="/login" className="text-primary font-medium hover:underline">Masuk</Link>
+            Sudah punya akun? <Link href="/login" className="text-amber-600 font-medium hover:underline">Masuk</Link>
           </p>
         </CardFooter>
       </Card>

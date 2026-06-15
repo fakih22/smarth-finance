@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
@@ -15,8 +15,18 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("registered") === "true") {
+        setSuccess("Pendaftaran berhasil! Silakan masuk dengan akun Anda.");
+      }
+    }
+  }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,7 +48,7 @@ export default function LoginPage() {
       <Card className="w-full max-w-md shadow-lg border-primary/10">
         <CardHeader className="space-y-1 text-center">
           <div className="flex justify-center mb-4">
-            <div className="h-12 w-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+            <div className="h-12 w-12 bg-amber-100 rounded-full flex items-center justify-center text-amber-600">
               <Wallet className="h-6 w-6" />
             </div>
           </div>
@@ -49,6 +59,7 @@ export default function LoginPage() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-4">
+            {success && <div className="p-3 bg-green-100 text-green-700 text-sm rounded-md border border-green-200">{success}</div>}
             {error && <div className="p-3 bg-red-100 text-red-600 text-sm rounded-md">{error}</div>}
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
@@ -64,7 +75,7 @@ export default function LoginPage() {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">Password</Label>
-                <Link href="#" className="text-xs text-primary hover:underline">Lupa Password?</Link>
+                <Link href="#" className="text-xs text-amber-600 hover:underline">Lupa Password?</Link>
               </div>
               <Input 
                 id="password" 
@@ -74,14 +85,14 @@ export default function LoginPage() {
                 required
               />
             </div>
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button type="submit" className="w-full bg-amber-500 hover:bg-amber-600 text-white" disabled={loading}>
               {loading ? "Memproses..." : "Masuk"}
             </Button>
           </form>
         </CardContent>
         <CardFooter className="justify-center">
           <p className="text-sm text-muted-foreground">
-            Belum punya akun? <Link href="/register" className="text-primary font-medium hover:underline">Daftar sekarang</Link>
+            Belum punya akun? <Link href="/register" className="text-amber-600 font-medium hover:underline">Daftar sekarang</Link>
           </p>
         </CardFooter>
       </Card>
