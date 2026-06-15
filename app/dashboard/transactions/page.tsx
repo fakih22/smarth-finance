@@ -37,6 +37,16 @@ export default function TransactionsPage() {
   const [method, setMethod] = useState("Cash");
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const q = params.get("search");
+      if (q) {
+        setSearchTerm(decodeURIComponent(q));
+      }
+    }
+  }, []);
+
+  useEffect(() => {
     if (!user) return;
     
     // Fetch Transactions

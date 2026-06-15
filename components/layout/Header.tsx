@@ -5,10 +5,18 @@ import { LogOut, Menu, User, Bell, Search } from "lucide-react";
 import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export const Header = () => {
   const { user } = useAuth();
   const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && searchQuery.trim()) {
+      router.push(`/dashboard/transactions?search=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
 
   const handleLogout = async () => {
     try {
@@ -27,12 +35,15 @@ export const Header = () => {
       </div>
 
       {/* Desktop Search - hidden on mobile */}
-      <div className="hidden md:flex items-center bg-secondary rounded-md px-3 py-1.5 w-64 border">
+      <div className="hidden md:flex items-center bg-secondary rounded-md px-3 py-1.5 w-64 border focus-within:ring-1 focus-within:ring-amber-500">
         <Search className="h-4 w-4 text-muted-foreground mr-2" />
         <input 
           type="text" 
-          placeholder="Cari transaksi..." 
+          placeholder="Cari transaksi ..." 
           className="bg-transparent border-none outline-none text-sm w-full"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onKeyDown={handleSearch}
         />
       </div>
 
