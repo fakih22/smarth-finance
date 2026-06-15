@@ -218,7 +218,7 @@ export default function TransactionsPage() {
           <h2 className="text-2xl font-bold tracking-tight">Manajemen Transaksi</h2>
           <p className="text-muted-foreground">Kelola dan pantau semua pemasukan dan pengeluaran Anda secara real-time.</p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <Button variant="outline" onClick={exportToPDF} disabled={filteredTransactions.length === 0}>
             <FileText className="mr-2 h-4 w-4 text-red-500" />
             PDF
@@ -300,38 +300,42 @@ export default function TransactionsPage() {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <div className="flex items-center gap-2 flex-wrap">
-              <Calendar className="h-4 w-4 text-muted-foreground" />
-              <select
-                className="h-9 rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm"
-                value={dateFilter}
-                onChange={(e) => setDateFilter(e.target.value)}
-              >
-                <option value="Semua Waktu">Semua Waktu</option>
-                <option value="Hari Ini">Hari Ini</option>
-                <option value="7 Hari Terakhir">7 Hari Terakhir</option>
-                <option value="Bulan Ini">Bulan Ini</option>
-                <option value="Pilih Rentang">Pilih Rentang</option>
-              </select>
+            <div className="grid grid-cols-2 gap-2 w-full md:w-auto md:flex md:items-center">
+              <div className="flex items-center gap-2">
+                <Calendar className="h-4 w-4 text-muted-foreground hidden sm:block" />
+                <select
+                  className="h-9 w-full rounded-md border border-input bg-background px-2 py-1 text-sm shadow-sm"
+                  value={dateFilter}
+                  onChange={(e) => setDateFilter(e.target.value)}
+                >
+                  <option value="Semua Waktu">Semua Waktu</option>
+                  <option value="Hari Ini">Hari Ini</option>
+                  <option value="7 Hari Terakhir">7 Hari Terakhir</option>
+                  <option value="Bulan Ini">Bulan Ini</option>
+                  <option value="Pilih Rentang">Pilih Rentang</option>
+                </select>
+              </div>
 
               {dateFilter === "Pilih Rentang" && (
-                <div className="flex items-center gap-2 ml-2">
-                  <Input type="date" className="h-9 w-[140px]" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                <div className="flex items-center gap-2 col-span-2 md:col-span-1 justify-center mt-2 md:mt-0">
+                  <Input type="date" className="h-9 w-[130px] px-2" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
                   <span className="text-muted-foreground">-</span>
-                  <Input type="date" className="h-9 w-[140px]" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+                  <Input type="date" className="h-9 w-[130px] px-2" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
                 </div>
               )}
 
-              <Filter className="h-4 w-4 text-muted-foreground ml-2" />
-              <select
-                className="h-9 w-[180px] rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm"
-                value={typeFilter}
-                onChange={(e) => setTypeFilter(e.target.value)}
-              >
-                <option value="Semua">Semua Jenis</option>
-                <option value="Pemasukan">Pemasukan</option>
-                <option value="Pengeluaran">Pengeluaran</option>
-              </select>
+              <div className="flex items-center gap-2">
+                <Filter className="h-4 w-4 text-muted-foreground hidden sm:block" />
+                <select
+                  className="h-9 w-full md:w-[180px] rounded-md border border-input bg-background px-2 py-1 text-sm shadow-sm"
+                  value={typeFilter}
+                  onChange={(e) => setTypeFilter(e.target.value)}
+                >
+                  <option value="Semua">Semua Jenis</option>
+                  <option value="Pemasukan">Pemasukan</option>
+                  <option value="Pengeluaran">Pengeluaran</option>
+                </select>
+              </div>
             </div>
           </div>
         </CardHeader>

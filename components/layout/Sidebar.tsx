@@ -10,9 +10,6 @@ import {
   Target,
   PiggyBank,
   TrendingUp,
-  Settings,
-  Bell,
-  LogOut,
   FileText
 } from "lucide-react";
 
@@ -91,22 +88,6 @@ export const Sidebar = () => {
             </Link>
           ))}
         </div>
-      </div>
-      <div className="px-3 py-2">
-        <Link
-          href="/settings"
-          className={cn(
-            "text-sm group flex p-3 w-full justify-start font-bold cursor-pointer rounded-xl transition-all duration-200",
-            pathname === "/settings" 
-              ? "bg-amber-400 text-amber-950 shadow-md border border-amber-300" 
-              : "text-amber-900 hover:bg-amber-300/50 hover:text-amber-950"
-          )}
-        >
-          <div className="flex items-center flex-1">
-            <Settings className="h-5 w-5 mr-3 text-amber-700" />
-            Pengaturan
-          </div>
-        </Link>
       </div>
     </div>
   );

@@ -41,9 +41,9 @@ export default function DashboardLayout({
       </div>
       
       {/* Main Content */}
-      <main className="md:pl-64 flex flex-col flex-1 h-full relative">
+      <main className="md:pl-64 flex flex-col flex-1 h-full w-full min-w-0 relative overflow-hidden">
         <Header />
-        <div className="flex-1 overflow-y-auto p-4 md:p-8 bg-transparent pb-24 md:pb-8">
+        <div className="flex-1 min-w-0 overflow-y-auto overflow-x-hidden p-4 md:p-8 bg-transparent pb-24 md:pb-8 w-full">
           {children}
         </div>
       </main>
